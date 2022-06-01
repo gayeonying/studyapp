@@ -1,0 +1,248 @@
+#:kivy 1.11.1
+<LoginScreen@Screen>:
+    name: "login_screen"
+    on_enter:
+        app.animate_background(lla)
+        app.animate_card(box_card)
+    LoginLayout:
+        id: lla
+    MDCard:
+        id: box_card
+        orientation: "vertical"
+        size_hint: [0.8, 0.6]
+        pos_hint: {"center_x": 0.5, "center_y": 0}
+        
+        BoxLayout:
+            padding: [15, 0, 15, 0]
+            orientation: "vertical"
+            MDLabel:
+                text: "LOGIN PAGE"
+                text_size: self.size
+                font_size: 35
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+    
+            MDLabel:
+                text: ""
+                halign: "center"
+                valign: "middle"
+                bold: True
+                color: utils.get_color_from_hex("#006233")
+        
+        MDTextField:
+            id: name
+            hint_text: "NAME"
+            helper_text: "NAME"
+            padding_x:[10,0]
+            size_hint_x: 0.8
+            pos_hint: {"center_x": 0.5}
+        MDTextField:
+            id: id
+            hint_text: "ID"
+            helper_text: "ID"
+            size_hint_x: 0.8
+            pos_hint: {"center_x": 0.5}
+        MDTextField:
+            id: passwd
+            hint_text: "Password"
+            helper_text: "Password"
+            size_hint_x: 0.8
+            pos_hint: {"center_x": 0.5}
+            password: True
+        BoxLayout:
+            orientation: "vertical"
+            MDFillRoundFlatButton:
+                text: "LOGIN"
+                bold: True
+                size_hint_x: 0.8
+                pos_hint: {"center_x": .5}
+                on_release:
+                    app.manage_screens("study_screen", "add")
+                    app.change_screen("study_screen")
+
+<StudyScreen@Screen>:
+    name: "study_screen"
+    on_enter:
+        app.animate_background(lla)
+        #app.animate_card(box_card)
+    LoginLayout:
+        id: lla
+    MDCard:
+        #id: box_card
+        orientation: "vertical"
+        size_hint: [0.8, 0.6]
+        pos_hint: {"center_x": 0.5, "center_y": 0.6}
+        
+        BoxLayout:
+            padding: [15, 0, 15, 0]
+            orientation: "vertical"
+            MDLabel:
+                text: "FOURSTARS STUDY"
+                text_size: self.size
+                font_size: 35
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+    
+            MDLabel:
+                text: "\nToday Study Time\n"+str(app.get_daily_study_result())+"\n"+str(app.get_date())
+                halign: "center"
+                valign: "middle"
+                font_size: 28
+                bold: True
+                color: utils.get_color_from_hex("#b302cf")
+        
+        # MDTextField:
+        #     id: email
+        #     hint_text: "E-mail"
+        #     # helper_text: "E-mail"
+        #     # padding_x:[10,0]
+        #     size_hint_x: 0.8
+        #     pos_hint: {"center_x": 0.5}
+        # MDTextField:
+        #     id: passwd
+        #     hint_text: "Password"
+        #     # helper_text: "Password"
+        #     size_hint_x: 0.8
+        #     pos_hint: {"center_x": 0.5}
+        #     password: True
+        BoxLayout:
+            orientation: "vertical"
+            MDFillRoundFlatButton:
+                text: "START STUDY"
+                bold: True
+                size_hint_x: 0.8
+                pos_hint: {"center_x": .5}
+                on_release:
+                    app.update()
+            MDRectangleFlatButton:
+                text: "CHECK STUDY TIME"
+                pos_hint: {"center_x": .5}
+                on_release:
+                    app.manage_screens("registration_screen", "add")
+                    app.change_screen("registration_screen")
+                    app.update_donut_graph()
+            
+<RegistrationScreen@Screen>:
+    name: "registration_screen"
+    on_enter:
+        app.animate_background(lla)
+    LoginLayout:
+        id: lla
+    BoxLayout:
+        size_hint: [0.8, 0.7]
+        pos_hint: {"center_x": 0.5, "center_y": 0.6}
+        MDCard:
+            orientation: "vertical"
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                    text: "[color=000000]CHECK STUDY TIME[/color]"
+                    markup: True
+                    text_size: self.size
+                    font_size: 25
+                    bold: True
+                    halign: 'center'
+                    valign: 'middle'
+        
+                #MDLabel:
+                    #text: "GRAPH"
+                    #halign: "center"
+                    #valign: "middle"
+                    #bold: True
+                    #color: utils.get_color_from_hex("#006233")
+                Image:
+                    source: 'graph.png'
+                    size: self.texture_size
+                    #size_hint_y: None
+                    #size_hint_x: 0.8
+                    #width: 100
+                    allow_stretch: True
+                
+            #MDTextField:
+                #id: study_time
+                #hint_text: 'Study Time : '+str(app.get_study_result())
+                #size_hint_x: 0.8
+                #pos_hint: {"center_x": 0.5}
+            #MDTextField:
+                #id: notstudy_time
+                #hint_text: 'Not Study Time : '+str(app.get_not_study_result())
+                #size_hint_x: 0.8
+                #pos_hint: {"center_x": 0.5}
+            MDTextField:
+                id: daily
+                hint_text: "DAILY : "+str(app.get_daily_study_result())
+                size_hint_x: 0.8
+                pos_hint: {"center_x": 0.5}
+            MDTextField:
+                id: weekly
+                hint_text: "WEEKLY : "+str(app.get_weekly_study_result())
+                size_hint_x: 0.8
+                pos_hint: {"center_x": 0.5}
+            MDTextField:
+                id: monthly
+                hint_text: "MONTHLY : "+str(app.get_monthly_study_result())
+                size_hint_x: 0.8
+                pos_hint: {"center_x": 0.5}
+                password: True
+            BoxLayout:
+                orientation: "vertical"
+                # MDFillRoundFlatButton:
+                #     text: "SIGN UP"
+                #     size_hint_x: 0.8
+                #     pos_hint: {"center_x": .5}
+                #     on_release:
+                #         app.account_action(email.text, passwd.text, username=username.text, action="register") if username.text != "" and email.text != "" else None
+                MDRectangleFlatButton:
+                    text: "BACK TO MAIN"
+                    pos_hint: {"x": .2, "y": 0.1}
+                    on_release:
+                        app.change_screen("study_screen")
+
+<LoginLayout@BoxLayout>:
+    orientation: "vertical"
+    BoxLayout:
+        size_hint_y: 0.1
+        MDLabel:
+            text: "LOGIN"
+    BoxLayout:
+        id: bx
+        orientation: "vertical"
+        size_hint_y: 0.1
+        canvas.before:
+            Color:
+                rgba: utils.get_color_from_hex("#6633FF")
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [0, 0, 30, 30]
+    FloatLayout:
+        id: circles
+        orientation: "horizontal"
+        
+        Scatter:
+            size_hint: None,None
+            
+            Widget:
+                canvas.before:
+                    Color:
+                        rgba: utils.get_color_from_hex("#0000FF")
+                    Ellipse:
+                        pos: self.pos
+        Scatter:
+            size_hint: None,None
+            Widget:
+                canvas.before:
+                    Color:
+                        rgba: utils.get_color_from_hex("#7f00ff")
+                    Ellipse:
+                        pos: self.pos
+        Scatter:
+            size_hint: None, None
+            Widget:
+                canvas.before:
+                    Color:
+                        rgba: utils.get_color_from_hex("#00B7EB")
+                    Ellipse:
+                        pos: self.pos
